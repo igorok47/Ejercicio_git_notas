@@ -56,6 +56,7 @@ int main()
 {
 	char msg[128];
 	int id_alumno=-1;
+	int id_asignatura=-1;
 	int kont;
 
 	cargar_datos();
@@ -81,6 +82,30 @@ int main()
 							printf("\n Asignatura: %s Nota: %i\n",asignaturas[kontas].nombre,notas[kont].nota);
 							kontas=num_asignaturas;
 						}
+					}
+				}
+			}
+
+			break;
+
+		case 2:
+
+			printf("\nID alumno:\n");
+			fgets(msg,128,stdin);
+			sscanf(msg,"%i",&id_alumno);
+
+			printf("\nID asignatura:\n");
+			fgets(msg,128,stdin);
+			sscanf(msg,"%i",&id_asignatura);
+
+			for(kont=0;kont<num_notas;kont++)
+			{
+				if((notas[kont].alumno_id==id_alumno)&&(notas[kont].asignatura_id==id_asignatura))
+				{
+					for(int kontas=0;kontas<num_asignaturas;kontas++)
+					{
+						printf("\n Nota: %i\n",notas[kont].nota);
+						kontas=num_asignaturas;
 					}
 				}
 			}
@@ -159,7 +184,7 @@ int menu()
 			 "         1) Mostrar notas de alumno\n"
 			 "         2) Mostrar nota por asignatura por alumno\n"
 			 "         3) Nota media de asignatura\n"
-			 "         4) Nota media por asignaturas\n"
+			 "         4) Nota media por asignaturas de alumno\n"
 			 "         5) Nota media por curso\n");
 
 	fgets(msg,128,stdin);
