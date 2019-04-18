@@ -57,7 +57,9 @@ int main()
 	char msg[128];
 	int id_alumno=-1;
 	int id_asignatura=-1;
+	int id_curso=-1;
 	int kont=0;
+	int aux_kont=0;
 	int sum_notas=0;
 	int num_notas_sumadas=0;
 	float media_notas=0;
@@ -136,6 +138,64 @@ int main()
 			media_notas=(float)sum_notas/(float)num_notas_sumadas;
 
 			printf("\n Media: %.2f\n", media_notas);
+
+			break;
+
+		case 4:
+
+			printf("\nID alumno:\n");
+			fgets(msg,128,stdin);
+			sscanf(msg,"%i",&id_alumno);
+
+			sum_notas=0;
+			num_notas_sumadas=0;
+
+			for(aux_kont=0;aux_kont<num_notas;aux_kont++)
+			{
+				if((notas[aux_kont].alumno_id==id_alumno))
+				{
+					sum_notas+=notas[aux_kont].nota;
+					num_notas_sumadas++;
+				}
+			}
+
+			media_notas=(float)sum_notas/(float)num_notas_sumadas;
+
+			printf("\n Media: %.2f\n", media_notas);
+
+			break;
+
+		case 5:
+
+			printf("\nID curso:\n");
+			fgets(msg,128,stdin);
+			sscanf(msg,"%i",&id_curso);
+
+			sum_notas=0;
+			num_notas_sumadas=0;
+
+			for(kont=0;kont<num_asignaturas;kont++)
+			{
+				if(asignaturas[kont].curso_id==id_curso)
+				{
+					id_asignatura=asignaturas[kont].id;
+
+					for(aux_kont=0;aux_kont<num_notas;aux_kont++)
+					{
+						if((notas[aux_kont].asignatura_id==id_asignatura))
+						{
+							sum_notas+=notas[aux_kont].nota;
+							num_notas_sumadas++;
+						}
+					}
+				}
+			}
+
+			media_notas=(float)sum_notas/(float)num_notas_sumadas;
+
+			printf("\n Media: %.2f\n", media_notas);
+
+			break;
 		}
 	}
 }
@@ -165,11 +225,10 @@ void cargar_datos()
 
 	for(kont=0;kont<2;kont++)
 	{
-		cursos[kont].id=kont;
 		cursos[kont].nombre=malloc(20);
 
 		fgets(msg,128,fp);
-		strcpy(cursos[kont].nombre,msg);
+		sscanf(msg,"%i %s",&cursos[kont].id,cursos[kont].nombre);
 	}
 
 	num_cursos=kont;
@@ -178,11 +237,10 @@ void cargar_datos()
 
 	for(kont=0;kont<10;kont++)
 	{
-		asignaturas[kont].id=kont;
 		asignaturas[kont].nombre=malloc(20);
 
 		fgets(msg,128,fp);
-		sscanf(msg,"%i %s",&asignaturas[kont].curso_id,asignaturas[kont].nombre);
+		sscanf(msg,"%i %i %s",&asignaturas[kont].id,&asignaturas[kont].curso_id,asignaturas[kont].nombre);
 	}
 
 	num_asignaturas=kont;
@@ -209,7 +267,7 @@ int menu()
 			 "         1) Mostrar notas de alumno\n"
 			 "         2) Mostrar nota por asignatura por alumno\n"
 			 "         3) Nota media de asignatura\n"
-			 "         4) Nota media por asignaturas de alumno\n"
+			 "         4) Nota media de alumno\n"
 			 "         5) Nota media por curso\n");
 
 	fgets(msg,128,stdin);
