@@ -57,7 +57,10 @@ int main()
 	char msg[128];
 	int id_alumno=-1;
 	int id_asignatura=-1;
-	int kont;
+	int kont=0;
+	int sum_notas=0;
+	int num_notas_sumadas=0;
+	float media_notas=0;
 
 	cargar_datos();
 
@@ -111,6 +114,28 @@ int main()
 			}
 
 			break;
+
+		case 3:
+
+			printf("\nID asignatura:\n");
+			fgets(msg,128,stdin);
+			sscanf(msg,"%i",&id_asignatura);
+
+			sum_notas=0;
+			num_notas_sumadas=0;
+
+			for(kont=0;kont<num_notas;kont++)
+			{
+				if((notas[kont].asignatura_id==id_asignatura))
+				{
+					sum_notas+=notas[kont].nota;
+					num_notas_sumadas++;
+				}
+			}
+
+			media_notas=(float)sum_notas/(float)num_notas_sumadas;
+
+			printf("\n Media: %.2f\n", media_notas);
 		}
 	}
 }
