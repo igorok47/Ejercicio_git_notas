@@ -44,6 +44,12 @@ int main()
 			mostrar_nota_media_curso();
 
 			break;
+
+		case 6:
+
+			nota_media_alumnos_ordenado();
+
+			break;
 		}
 	}
 }
@@ -197,6 +203,59 @@ void mostrar_nota_media_curso()
 	printf("\n Media: %.2f\n", media_notas);
 }
 
+void nota_media_alumnos_ordenado()
+{
+	Media_alumno medias_alumnos[num_alumnos];
+	Media_alumno medias_alumnos_ordenadas[num_alumnos];
+
+	int kont=0;
+	int aux_kont=0;
+	int sum_notas=0;
+	int num_notas_sumadas=0;
+	float media_notas=0;
+
+	for(kont=0;kont<num_alumnos;kont++)
+	{
+		sum_notas=0;
+		num_notas_sumadas=0;
+
+		for(aux_kont=0;aux_kont<num_notas;aux_kont++)
+		{
+			if((notas[aux_kont].alumno_id==alumnos[kont].id))
+			{
+				sum_notas+=notas[aux_kont].nota;
+				num_notas_sumadas++;
+			}
+		}
+
+		media_notas=(float)sum_notas/(float)num_notas_sumadas;
+
+
+		medias_alumnos[kont].alumno=alumnos[kont];
+		medias_alumnos[kont].nota_media=media_notas;
+	}
+
+	for(kont=0;kont<num_alumnos;kont++)
+	{
+		medias_alumnos_ordenadas[kont]=medias_alumnos[kont];
+	}
+
+	printf("\n");
+
+	for(kont=0;kont<num_alumnos;kont++)
+	{
+		printf(" Alumno %i %s %s %s Nota media: %f\n",medias_alumnos_ordenadas[kont].alumno.id
+													,medias_alumnos_ordenadas[kont].alumno.nombre
+													,medias_alumnos_ordenadas[kont].alumno.apellido_1
+													,medias_alumnos_ordenadas[kont].alumno.apellido_2
+													,medias_alumnos_ordenadas[kont].nota_media);
+	}
+
+	printf("\n");
+
+
+}
+
 
 
 
@@ -269,7 +328,8 @@ int menu()
 			 "         %i) Mostrar nota por asignatura por alumno\n"
 			 "         %i) Nota media de asignatura\n"
 			 "         %i) Nota media de alumno\n"
-			 "         %i) Nota media por curso\n",MOST_NOTAS_ALUMNO,MOST_NOTA_ASIGNATUA_ALUMNO,MOST_NOTA_MEDIA_ASIGNATURA,MOST_NOTA_MEDIA_ALUMNO,MOST_NOTA_MEDIA_CURSO);
+			 "         %i) Nota media por curso\n"
+			 "         %i) Mostrar alumnos ordenados por nota media\n",MOST_NOTAS_ALUMNO,MOST_NOTA_ASIGNATUA_ALUMNO,MOST_NOTA_MEDIA_ASIGNATURA,MOST_NOTA_MEDIA_ALUMNO,MOST_NOTA_MEDIA_CURSO,6);
 
 	fgets(msg,INPUT_BUFFER_SIZE,stdin);
 	sscanf(msg,"%i",&ret);

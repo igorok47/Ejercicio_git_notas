@@ -53,6 +53,12 @@ typedef struct nota
 	int nota;
 }Nota;
 
+typedef struct media_alumno
+{
+	Alumno alumno;
+	float nota_media;
+}Media_alumno;
+
 Alumno alumnos[4];
 Curso cursos[2];
 Asignatura asignaturas[10];
@@ -69,6 +75,7 @@ void mostrar_nota_por_asignatura_por_alumno();
 void mostrar_nota_media_asignatura();
 void mostrat_nota_media_alumno();
 void mostrar_nota_media_curso();
+void nota_media_alumnos_ordenado();
 void cargar_datos();
 int menu();
 
