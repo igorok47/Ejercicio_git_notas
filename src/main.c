@@ -288,7 +288,7 @@ void mostrar_alumnos_curso()
 
 	id_curso=pedir_ID("ID curso");
 
-	for(kont=0;kont<num_alumnos-1;kont++)
+	for(kont=0;kont<num_alumnos;kont++)
 	{
 		for(aux_kont=0;aux_kont<num_notas;aux_kont++)
 		{
