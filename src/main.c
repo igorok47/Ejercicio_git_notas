@@ -206,12 +206,13 @@ void mostrar_nota_media_curso()
 void nota_media_alumnos_ordenado()
 {
 	Media_alumno medias_alumnos[num_alumnos];
-	Media_alumno medias_alumnos_ordenadas[num_alumnos];
+	Media_alumno aux_medias_alumnos;
 
 	int kont=0;
 	int aux_kont=0;
 	int sum_notas=0;
 	int num_notas_sumadas=0;
+	int medias_ordenadas=0;
 	float media_notas=0;
 
 	for(kont=0;kont<num_alumnos;kont++)
@@ -235,20 +236,31 @@ void nota_media_alumnos_ordenado()
 		medias_alumnos[kont].nota_media=media_notas;
 	}
 
-	for(kont=0;kont<num_alumnos;kont++)
+	while(!medias_ordenadas)
 	{
-		medias_alumnos_ordenadas[kont]=medias_alumnos[kont];
+		medias_ordenadas=1;
+
+		for(kont=0;kont<num_alumnos-1;kont++)
+		{
+			if(medias_alumnos[kont].nota_media>medias_alumnos[kont+1].nota_media)
+			{
+				medias_ordenadas=0;
+				aux_medias_alumnos=medias_alumnos[kont+1];
+				medias_alumnos[kont+1]=medias_alumnos[kont];
+				medias_alumnos[kont]=aux_medias_alumnos;
+			}
+		}
 	}
 
 	printf("\n");
 
 	for(kont=0;kont<num_alumnos;kont++)
 	{
-		printf(" Alumno %i %s %s %s Nota media: %f\n",medias_alumnos_ordenadas[kont].alumno.id
-													,medias_alumnos_ordenadas[kont].alumno.nombre
-													,medias_alumnos_ordenadas[kont].alumno.apellido_1
-													,medias_alumnos_ordenadas[kont].alumno.apellido_2
-													,medias_alumnos_ordenadas[kont].nota_media);
+		printf(" Alumno %i %s %s %s Nota media: %f\n",medias_alumnos[kont].alumno.id
+													,medias_alumnos[kont].alumno.nombre
+													,medias_alumnos[kont].alumno.apellido_1
+													,medias_alumnos[kont].alumno.apellido_2
+													,medias_alumnos[kont].nota_media);
 	}
 
 	printf("\n");
