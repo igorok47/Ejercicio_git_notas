@@ -77,7 +77,7 @@ void mostrar_notas_alumno()
 	int id_alumno;
 	int kont;
 
-	id_alumno=pedir_ID("ID alumno");
+	id_alumno=pedir_ID("Ikasle ID-a");
 
 	for(kont=0;kont<num_notas;kont++)
 	{
@@ -87,7 +87,7 @@ void mostrar_notas_alumno()
 			{
 				if(asignaturas[kontas].id==notas[kont].asignatura_id)
 				{
-					printf("\n Asignatura: %s Nota: %i\n",asignaturas[kontas].nombre,notas[kont].nota);
+					printf("\n Ikasgaia: %s Nota: %i\n",asignaturas[kontas].nombre,notas[kont].nota);
 					kontas=num_asignaturas;
 				}
 			}
@@ -101,9 +101,9 @@ void mostrar_nota_por_asignatura_por_alumno()
 	int id_asignatura;
 	int kont;
 
-	id_alumno=pedir_ID("ID alumno");
+	id_alumno=pedir_ID("Ikasle ID-a");
 
-	id_asignatura=pedir_ID("ID asignatura");
+	id_asignatura=pedir_ID("Ikasgai ID-a");
 
 	for(kont=0;kont<num_notas;kont++)
 	{
@@ -126,7 +126,7 @@ void mostrar_nota_media_asignatura()
 	int kont;
 	float media_notas=0;
 
-	id_asignatura=pedir_ID("ID asignatura");
+	id_asignatura=pedir_ID("Ikasgai ID-a");
 
 	sum_notas=0;
 	num_notas_sumadas=0;
@@ -153,7 +153,7 @@ void mostrat_nota_media_alumno()
 	int kont;
 	float media_notas=0;
 
-	id_alumno=pedir_ID("ID alumno");
+	id_alumno=pedir_ID("Ikasle ID-a");
 
 	sum_notas=0;
 	num_notas_sumadas=0;
@@ -169,7 +169,7 @@ void mostrat_nota_media_alumno()
 
 	media_notas=(float)sum_notas/(float)num_notas_sumadas;
 
-	printf("\n Media: %.2f\n", media_notas);
+	printf("\n Batazbestekoa: %.2f\n", media_notas);
 }
 
 void mostrar_nota_media_curso()
@@ -182,7 +182,7 @@ void mostrar_nota_media_curso()
 	int aux_kont;
 	float media_notas=0;
 
-	id_curso=pedir_ID("ID curso");
+	id_curso=pedir_ID("Ikastaro ID-a");
 
 	sum_notas=0;
 	num_notas_sumadas=0;
@@ -206,7 +206,7 @@ void mostrar_nota_media_curso()
 
 	media_notas=(float)sum_notas/(float)num_notas_sumadas;
 
-	printf("\n Media: %.2f\n", media_notas);
+	printf("\n Batazbestekoa: %.2f\n", media_notas);
 }
 
 void nota_media_alumnos_ordenado()
@@ -262,7 +262,7 @@ void nota_media_alumnos_ordenado()
 
 	for(kont=0;kont<num_alumnos;kont++)
 	{
-		printf(" Alumno %i %s %s %s Nota media: %f\n",medias_alumnos[kont].alumno.id
+		printf(" Ikaslea: %i %s %s %s Batazbesteko nota: %f\n",medias_alumnos[kont].alumno.id
 													,medias_alumnos[kont].alumno.nombre
 													,medias_alumnos[kont].alumno.apellido_1
 													,medias_alumnos[kont].alumno.apellido_2
@@ -285,7 +285,7 @@ void mostrar_alumnos_curso()
 	Alumno alumnos_aux[4];
 
 
-	id_curso=pedir_ID("ID curso");
+	id_curso=pedir_ID("Ikastaro ID-a");
 
 	for(kont=0;kont<num_alumnos;kont++)
 	{
@@ -311,7 +311,7 @@ void mostrar_alumnos_curso()
 
 	for(kont=0;kont<alumno_kont;kont++)
 	{
-		printf(" Alumno %i %s %s %s\n",alumnos_aux[kont].id
+		printf("%i %s %s %s ikaslea\n",alumnos_aux[kont].id
 													,alumnos_aux[kont].nombre
 													,alumnos_aux[kont].apellido_1
 													,alumnos_aux[kont].apellido_2);
@@ -337,13 +337,13 @@ void cargar_datos()
 
 	FILE *fp;
 
-	fp=fopen("fichero_alumnos.fch","r");
+	fp=fopen("ikasle_fitxategia.ftx","r");
 
 	while((!datos_alumnos)||(!datos_cursos)||(!datos_asignaturas)||(!datos_notas))
 	{
 		fgets(msg,INPUT_BUFFER_SIZE,fp);
 
-		if((!datos_alumnos)&&(strcmp(msg,"Alumnos\n")==0))
+		if((!datos_alumnos)&&(strcmp(msg,"Ikasleak\n")==0))
 		{
 			kont=0;
 			end_msg=0;
@@ -375,7 +375,7 @@ void cargar_datos()
 		}
 		else
 		{
-			if((!datos_cursos)&&(strcmp(msg,"Cursos\n")==0))
+			if((!datos_cursos)&&(strcmp(msg,"Ikastaroak\n")==0))
 			{
 				kont=0;
 				end_msg=0;
@@ -404,7 +404,7 @@ void cargar_datos()
 			}
 			else
 			{
-				if((!datos_asignaturas)&&(strcmp(msg,"Asignaturas\n")==0))
+				if((!datos_asignaturas)&&(strcmp(msg,"Ikasgaiak\n")==0))
 				{
 					kont=0;
 					end_msg=0;
@@ -433,7 +433,7 @@ void cargar_datos()
 				}
 				else
 				{
-					if((!datos_notas)&&(strcmp(msg,"Notas\n")==0))
+					if((!datos_notas)&&(strcmp(msg,"Notak\n")==0))
 					{
 						kont=0;
 						end_msg=0;
@@ -474,14 +474,14 @@ int menu()
 	char msg[INPUT_BUFFER_SIZE];
 	int ret=0;
 
-	printf("\n Opciones:\n"
-			 "         %i) Mostrar notas de alumno\n"
-			 "         %i) Mostrar nota por asignatura por alumno\n"
-			 "         %i) Nota media de asignatura\n"
-			 "         %i) Nota media de alumno\n"
-			 "         %i) Nota media por curso\n"
-			 "         %i) Mostrar alumnos ordenados por nota media\n"
-			 "         %i) Mostrar alumnos inscritos en curso\n",MOST_NOTAS_ALUMNO,MOST_NOTA_ASIGNATUA_ALUMNO
+	printf("\n Aukerak:\n"
+			 "         %i) Bistaratu ikaslearen notak\n"
+			 "         %i) Bistaratu ikaslearen ikasgai bateko notak\n"
+			 "         %i) Ikasgaiko batezbesteko nota\n"
+			 "         %i) Ikasle baten batezbesteko nota\n"
+			 "         %i) Ikastaro bateko batazbesteko nota\n"
+			 "         %i) Bistaratu ikasleak batazbesteko notaren arabera ordenatuta\n"
+			 "         %i) Bistaratu ikasgai batean inskribatutako ikasleak\n",MOST_NOTAS_ALUMNO,MOST_NOTA_ASIGNATUA_ALUMNO
 			 	 	 	 	 	 	 	 	 	 	 	 	 	 ,MOST_NOTA_MEDIA_ASIGNATURA
 																 ,MOST_NOTA_MEDIA_ALUMNO
 																 ,MOST_NOTA_MEDIA_CURSO

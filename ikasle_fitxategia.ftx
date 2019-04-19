@@ -1,16 +1,16 @@
 
 
-Cursos
-1 Curso_de_iniciación
-2 Curso_avanzado
+Ikastaroak
+1 Hasiera_ikastaroa
+2 Ikastaro_aurreratua
 
-Alumnos
+Ikasleak
 1 Ainara Saroe Urrutia asaroe@ariketa.eus
 2 Iker Ordoiza Lazkano iordoiza@ariketa.eus
 3 Asier Abiaga Lasarte aabiaga@ariketa.eus
 4 Nerea Zubillaga Garin nzubillaga@ariketa.eus
 
-Notas
+Notak
 1 1 0
 1 2 3
 1 3 2
@@ -52,15 +52,15 @@ Notas
 4 9 4
 4 10 10
 
-Asignaturas
+Ikasgaiak
 1 1 Algoritmia
-2 1 Matemáticas
-3 1 Física
-4 1 Electricidad
-5 1 Dibujo
-6 2 Programación Web
-7 2 Estadística
-8 2 Química
-9 2 Electrónica
+2 1 Matematika
+3 1 Fisika
+4 1 Elektrizitatea
+5 1 Marrazketa
+6 2 Web Programazioa
+7 2 Estatistika
+8 2 Kimika
+9 2 Elektronika
 10 2 CAD
 
