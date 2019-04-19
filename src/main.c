@@ -5,204 +5,205 @@
  *      Author: igor
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-typedef struct alumno
-{
-	int id;
-	char* nombre;
-	char* apellido_1;
-	char* apellido_2;
-	char* correo;
-}Alumno;
-
-typedef struct curso
-{
-	int id;
-	char* nombre;
-
-}Curso;
-
-typedef struct asignatura
-{
-	int id;
-	int curso_id;
-	char* nombre;
-}Asignatura;
-
-typedef struct nota
-{
-	int alumno_id;
-	int asignatura_id;
-	int nota;
-}Nota;
-
-Alumno alumnos[4];
-Curso cursos[2];
-Asignatura asignaturas[10];
-Nota notas[40];
-
-int num_alumnos;
-int num_cursos;
-int num_asignaturas;
-int num_notas;
-
-void cargar_datos();
-int menu();
+#include "main.h"
 
 int main()
 {
-	char msg[128];
-	int id_alumno=-1;
-	int id_asignatura=-1;
-	int id_curso=-1;
-	int kont=0;
-	int aux_kont=0;
-	int sum_notas=0;
-	int num_notas_sumadas=0;
-	float media_notas=0;
-
 	cargar_datos();
 
 	while(1)
 	{
 		switch(menu())
 		{
-		case 1:
+		case MOST_NOTAS_ALUMNO:
 
-			printf("\nID alumno:\n");
-			fgets(msg,128,stdin);
-			sscanf(msg,"%i",&id_alumno);
-
-			for(kont=0;kont<num_notas;kont++)
-			{
-				if(notas[kont].alumno_id==id_alumno)
-				{
-					for(int kontas=0;kontas<num_asignaturas;kontas++)
-					{
-						if(asignaturas[kontas].id==notas[kont].asignatura_id)
-						{
-							printf("\n Asignatura: %s Nota: %i\n",asignaturas[kontas].nombre,notas[kont].nota);
-							kontas=num_asignaturas;
-						}
-					}
-				}
-			}
+			mostrar_notas_alumno();
 
 			break;
 
-		case 2:
+		case MOST_NOTA_ASIGNATUA_ALUMNO:
 
-			printf("\nID alumno:\n");
-			fgets(msg,128,stdin);
-			sscanf(msg,"%i",&id_alumno);
-
-			printf("\nID asignatura:\n");
-			fgets(msg,128,stdin);
-			sscanf(msg,"%i",&id_asignatura);
-
-			for(kont=0;kont<num_notas;kont++)
-			{
-				if((notas[kont].alumno_id==id_alumno)&&(notas[kont].asignatura_id==id_asignatura))
-				{
-					for(int kontas=0;kontas<num_asignaturas;kontas++)
-					{
-						printf("\n Nota: %i\n",notas[kont].nota);
-						kontas=num_asignaturas;
-					}
-				}
-			}
+			mostrar_nota_por_asignatura_por_alumno();
 
 			break;
 
-		case 3:
+		case MOST_NOTA_MEDIA_ASIGNATURA:
 
-			printf("\nID asignatura:\n");
-			fgets(msg,128,stdin);
-			sscanf(msg,"%i",&id_asignatura);
-
-			sum_notas=0;
-			num_notas_sumadas=0;
-
-			for(kont=0;kont<num_notas;kont++)
-			{
-				if((notas[kont].asignatura_id==id_asignatura))
-				{
-					sum_notas+=notas[kont].nota;
-					num_notas_sumadas++;
-				}
-			}
-
-			media_notas=(float)sum_notas/(float)num_notas_sumadas;
-
-			printf("\n Media: %.2f\n", media_notas);
+			mostrar_nota_media_asignatura();
 
 			break;
 
-		case 4:
+		case MOST_NOTA_MEDIA_ALUMNO:
 
-			printf("\nID alumno:\n");
-			fgets(msg,128,stdin);
-			sscanf(msg,"%i",&id_alumno);
-
-			sum_notas=0;
-			num_notas_sumadas=0;
-
-			for(aux_kont=0;aux_kont<num_notas;aux_kont++)
-			{
-				if((notas[aux_kont].alumno_id==id_alumno))
-				{
-					sum_notas+=notas[aux_kont].nota;
-					num_notas_sumadas++;
-				}
-			}
-
-			media_notas=(float)sum_notas/(float)num_notas_sumadas;
-
-			printf("\n Media: %.2f\n", media_notas);
+			mostrat_nota_media_alumno();
 
 			break;
 
-		case 5:
+		case MOST_NOTA_MEDIA_CURSO:
 
-			printf("\nID curso:\n");
-			fgets(msg,128,stdin);
-			sscanf(msg,"%i",&id_curso);
-
-			sum_notas=0;
-			num_notas_sumadas=0;
-
-			for(kont=0;kont<num_asignaturas;kont++)
-			{
-				if(asignaturas[kont].curso_id==id_curso)
-				{
-					id_asignatura=asignaturas[kont].id;
-
-					for(aux_kont=0;aux_kont<num_notas;aux_kont++)
-					{
-						if((notas[aux_kont].asignatura_id==id_asignatura))
-						{
-							sum_notas+=notas[aux_kont].nota;
-							num_notas_sumadas++;
-						}
-					}
-				}
-			}
-
-			media_notas=(float)sum_notas/(float)num_notas_sumadas;
-
-			printf("\n Media: %.2f\n", media_notas);
+			mostrar_nota_media_curso();
 
 			break;
 		}
 	}
 }
 
+int pedir_ID(char* nombre_ID)
+{
+	int ret_ID=-1;
+	char msg[INPUT_BUFFER_SIZE];
+
+	printf("\n%s:\n",nombre_ID);
+	fgets(msg,INPUT_BUFFER_SIZE,stdin);
+	sscanf(msg,"%i",&ret_ID);
+
+	return ret_ID;
+}
+
+void mostrar_notas_alumno()
+{
+	int id_alumno;
+	int kont;
+
+	id_alumno=pedir_ID("ID alumno");
+
+	for(kont=0;kont<num_notas;kont++)
+	{
+		if(notas[kont].alumno_id==id_alumno)
+		{
+			for(int kontas=0;kontas<num_asignaturas;kontas++)
+			{
+				if(asignaturas[kontas].id==notas[kont].asignatura_id)
+				{
+					printf("\n Asignatura: %s Nota: %i\n",asignaturas[kontas].nombre,notas[kont].nota);
+					kontas=num_asignaturas;
+				}
+			}
+		}
+	}
+}
+
+void mostrar_nota_por_asignatura_por_alumno()
+{
+	int id_alumno;
+	int id_asignatura;
+	int kont;
+
+	id_alumno=pedir_ID("ID alumno");
+
+	id_asignatura=pedir_ID("ID asignatura");
+
+	for(kont=0;kont<num_notas;kont++)
+	{
+		if((notas[kont].alumno_id==id_alumno)&&(notas[kont].asignatura_id==id_asignatura))
+		{
+			for(int kontas=0;kontas<num_asignaturas;kontas++)
+			{
+				printf("\n Nota: %i\n",notas[kont].nota);
+				kontas=num_asignaturas;
+			}
+		}
+	}
+}
+
+void mostrar_nota_media_asignatura()
+{
+	int id_asignatura=-1;
+	int sum_notas=0;
+	int num_notas_sumadas=0;
+	int kont;
+	float media_notas=0;
+
+	id_asignatura=pedir_ID("ID asignatura");
+
+	sum_notas=0;
+	num_notas_sumadas=0;
+
+	for(kont=0;kont<num_notas;kont++)
+	{
+		if((notas[kont].asignatura_id==id_asignatura))
+		{
+			sum_notas+=notas[kont].nota;
+			num_notas_sumadas++;
+		}
+	}
+
+	media_notas=(float)sum_notas/(float)num_notas_sumadas;
+
+	printf("\n Media: %.2f\n", media_notas);
+}
+
+void mostrat_nota_media_alumno()
+{
+	int id_alumno=-1;
+	int sum_notas=0;
+	int num_notas_sumadas=0;
+	int kont;
+	float media_notas=0;
+
+	id_alumno=pedir_ID("ID alumno");
+
+	sum_notas=0;
+	num_notas_sumadas=0;
+
+	for(kont=0;kont<num_notas;kont++)
+	{
+		if((notas[kont].alumno_id==id_alumno))
+		{
+			sum_notas+=notas[kont].nota;
+			num_notas_sumadas++;
+		}
+	}
+
+	media_notas=(float)sum_notas/(float)num_notas_sumadas;
+
+	printf("\n Media: %.2f\n", media_notas);
+}
+
+void mostrar_nota_media_curso()
+{
+	int id_curso=-1;
+	int id_asignatura=-1;
+	int sum_notas=0;
+	int num_notas_sumadas=0;
+	int kont;
+	int aux_kont;
+	float media_notas=0;
+
+	id_curso=pedir_ID("ID curso");
+
+	sum_notas=0;
+	num_notas_sumadas=0;
+
+	for(kont=0;kont<num_asignaturas;kont++)
+	{
+		if(asignaturas[kont].curso_id==id_curso)
+		{
+			id_asignatura=asignaturas[kont].id;
+
+			for(aux_kont=0;aux_kont<num_notas;aux_kont++)
+			{
+				if((notas[aux_kont].asignatura_id==id_asignatura))
+				{
+					sum_notas+=notas[aux_kont].nota;
+					num_notas_sumadas++;
+				}
+			}
+		}
+	}
+
+	media_notas=(float)sum_notas/(float)num_notas_sumadas;
+
+	printf("\n Media: %.2f\n", media_notas);
+}
+
+
+
+
+
 void cargar_datos()
 {
-	char msg[128];
+	char msg[INPUT_BUFFER_SIZE];
 	int kont=0;
 	FILE *fp;
 
@@ -215,41 +216,41 @@ void cargar_datos()
 		alumnos[kont].apellido_2=malloc(20);
 		alumnos[kont].correo=malloc(40);
 
-		fgets(msg,128,fp);
+		fgets(msg,INPUT_BUFFER_SIZE,fp);
 		sscanf(msg,"%i %s %s %s %s",&alumnos[kont].id,alumnos[kont].nombre,alumnos[kont].apellido_1,alumnos[kont].apellido_2,alumnos[kont].correo);
 	}
 
 	num_alumnos=kont;
 
-	fgets(msg,128,fp);
+	fgets(msg,INPUT_BUFFER_SIZE,fp);
 
 	for(kont=0;kont<2;kont++)
 	{
 		cursos[kont].nombre=malloc(20);
 
-		fgets(msg,128,fp);
+		fgets(msg,INPUT_BUFFER_SIZE,fp);
 		sscanf(msg,"%i %s",&cursos[kont].id,cursos[kont].nombre);
 	}
 
 	num_cursos=kont;
 
-	fgets(msg,128,fp);
+	fgets(msg,INPUT_BUFFER_SIZE,fp);
 
 	for(kont=0;kont<10;kont++)
 	{
 		asignaturas[kont].nombre=malloc(20);
 
-		fgets(msg,128,fp);
+		fgets(msg,INPUT_BUFFER_SIZE,fp);
 		sscanf(msg,"%i %i %s",&asignaturas[kont].id,&asignaturas[kont].curso_id,asignaturas[kont].nombre);
 	}
 
 	num_asignaturas=kont;
 
-	fgets(msg,128,fp);
+	fgets(msg,INPUT_BUFFER_SIZE,fp);
 
 	for(kont=0;kont<40;kont++)
 	{
-		fgets(msg,128,fp);
+		fgets(msg,INPUT_BUFFER_SIZE,fp);
 		sscanf(msg,"%i %i %i",&notas[kont].alumno_id,&notas[kont].asignatura_id,&notas[kont].nota);
 	}
 
@@ -260,17 +261,17 @@ void cargar_datos()
 
 int menu()
 {
-	char msg[128];
+	char msg[INPUT_BUFFER_SIZE];
 	int ret=0;
 
 	printf("\n Opciones:\n"
-			 "         1) Mostrar notas de alumno\n"
-			 "         2) Mostrar nota por asignatura por alumno\n"
-			 "         3) Nota media de asignatura\n"
-			 "         4) Nota media de alumno\n"
-			 "         5) Nota media por curso\n");
+			 "         %i) Mostrar notas de alumno\n"
+			 "         %i) Mostrar nota por asignatura por alumno\n"
+			 "         %i) Nota media de asignatura\n"
+			 "         %i) Nota media de alumno\n"
+			 "         %i) Nota media por curso\n",MOST_NOTAS_ALUMNO,MOST_NOTA_ASIGNATUA_ALUMNO,MOST_NOTA_MEDIA_ASIGNATURA,MOST_NOTA_MEDIA_ALUMNO,MOST_NOTA_MEDIA_CURSO);
 
-	fgets(msg,128,stdin);
+	fgets(msg,INPUT_BUFFER_SIZE,stdin);
 	sscanf(msg,"%i",&ret);
 
 	return ret;
