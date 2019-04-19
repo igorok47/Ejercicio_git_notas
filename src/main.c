@@ -50,6 +50,12 @@ int main()
 			nota_media_alumnos_ordenado();
 
 			break;
+
+		case 7:
+
+			mostrar_alumnos_curso();
+
+			break;
 		}
 	}
 }
@@ -256,6 +262,54 @@ void nota_media_alumnos_ordenado()
 
 }
 
+void mostrar_alumnos_curso()
+{
+	int id_curso=-1;
+	int id_asignatura=-1;
+	int kont;
+	int aux_kont;
+	int aux2_kont;
+	int alumno_kont=0;
+
+	Alumno alumnos_aux[4];
+
+
+	id_curso=pedir_ID("ID curso");
+
+	for(kont=0;kont<num_alumnos-1;kont++)
+	{
+		for(aux_kont=0;aux_kont<num_notas;aux_kont++)
+		{
+			if((notas[aux_kont].alumno_id==alumnos[kont].id))
+			{
+				for(aux2_kont=0;aux2_kont<num_asignaturas;aux2_kont++)
+				{
+					if((notas[aux_kont].asignatura_id==asignaturas[aux2_kont].id)&&(asignaturas[aux2_kont].curso_id==id_curso))
+					{
+						alumnos_aux[alumno_kont]=alumnos[kont];
+						alumno_kont++;
+						aux2_kont=num_asignaturas;
+						aux_kont=num_notas;
+					}
+				}
+			}
+		}
+	}
+
+	printf("\n");
+
+	for(kont=0;kont<alumno_kont;kont++)
+	{
+		printf(" Alumno %i %s %s %s Nota media: %f\n",alumnos_aux[kont].id
+													,alumnos_aux[kont].nombre
+													,alumnos_aux[kont].apellido_1
+													,alumnos_aux[kont].apellido_2);
+	}
+
+	printf("\n");
+
+}
+
 
 
 
@@ -329,7 +383,13 @@ int menu()
 			 "         %i) Nota media de asignatura\n"
 			 "         %i) Nota media de alumno\n"
 			 "         %i) Nota media por curso\n"
-			 "         %i) Mostrar alumnos ordenados por nota media\n",MOST_NOTAS_ALUMNO,MOST_NOTA_ASIGNATUA_ALUMNO,MOST_NOTA_MEDIA_ASIGNATURA,MOST_NOTA_MEDIA_ALUMNO,MOST_NOTA_MEDIA_CURSO,6);
+			 "         %i) Mostrar alumnos ordenados por nota media\n"
+			 "         %i) Mostrar alumnos inscritos en curso\n",MOST_NOTAS_ALUMNO,MOST_NOTA_ASIGNATUA_ALUMNO
+			 	 	 	 	 	 	 	 	 	 	 	 	 	 ,MOST_NOTA_MEDIA_ASIGNATURA
+																 ,MOST_NOTA_MEDIA_ALUMNO
+																 ,MOST_NOTA_MEDIA_CURSO
+																 ,6
+																 ,7);
 
 	fgets(msg,INPUT_BUFFER_SIZE,stdin);
 	sscanf(msg,"%i",&ret);

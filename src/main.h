@@ -76,6 +76,7 @@ void mostrar_nota_media_asignatura();
 void mostrat_nota_media_alumno();
 void mostrar_nota_media_curso();
 void nota_media_alumnos_ordenado();
+void mostrar_alumnos_curso();
 void cargar_datos();
 int menu();
 
