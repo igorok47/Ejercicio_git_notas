@@ -12,72 +12,17 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define INPUT_BUFFER_SIZE 128
-
 typedef enum opciones
 {
-	MOST_NOTAS_ALUMNO=1,
-	MOST_NOTA_ASIGNATUA_ALUMNO=2,
-	MOST_NOTA_MEDIA_ASIGNATURA=3,
-	MOST_NOTA_MEDIA_ALUMNO=4,
-	MOST_NOTA_MEDIA_CURSO=5
+	BIST_IKALSE_NOTAK=1,
+	BIST_IKAGSAI_IKASLE_NOTA=2,
+	BIST_BATAZB_IKASGAI_NOTA=3,
+	BIST_BATAZB_IKASLE_NOTA=4,
+	BIST_BATAZB_IKASTARO_NOTA=5,
+	BIST_IKASLE_BATAZB_ORDENA=6,
+	BIST_IKASTARO_IKASLEAK=7
 }Filtro_nota;
 
-typedef struct alumno
-{
-	int id;
-	char* nombre;
-	char* apellido_1;
-	char* apellido_2;
-	char* correo;
-}Alumno;
-
-typedef struct curso
-{
-	int id;
-	char* nombre;
-
-}Curso;
-
-typedef struct asignatura
-{
-	int id;
-	int curso_id;
-	char* nombre;
-}Asignatura;
-
-typedef struct nota
-{
-	int alumno_id;
-	int asignatura_id;
-	int nota;
-}Nota;
-
-typedef struct media_alumno
-{
-	Alumno alumno;
-	float nota_media;
-}Media_alumno;
-
-Alumno alumnos[4];
-Curso cursos[2];
-Asignatura asignaturas[10];
-Nota notas[40];
-
-int num_alumnos;
-int num_cursos;
-int num_asignaturas;
-int num_notas;
-
-int pedir_ID(char* nombre_ID);
-void mostrar_notas_alumno();
-void mostrar_nota_por_asignatura_por_alumno();
-void mostrar_nota_media_asignatura();
-void mostrat_nota_media_alumno();
-void mostrar_nota_media_curso();
-void nota_media_alumnos_ordenado();
-void mostrar_alumnos_curso();
-void cargar_datos();
-int menu();
+int menua();
 
 #endif /* SRC_MAIN_H_ */
