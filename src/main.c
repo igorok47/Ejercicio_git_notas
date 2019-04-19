@@ -277,7 +277,6 @@ void nota_media_alumnos_ordenado()
 void mostrar_alumnos_curso()
 {
 	int id_curso=-1;
-	int id_asignatura=-1;
 	int kont;
 	int aux_kont;
 	int aux2_kont;
@@ -312,7 +311,7 @@ void mostrar_alumnos_curso()
 
 	for(kont=0;kont<alumno_kont;kont++)
 	{
-		printf(" Alumno %i %s %s %s Nota media: %f\n",alumnos_aux[kont].id
+		printf(" Alumno %i %s %s %s\n",alumnos_aux[kont].id
 													,alumnos_aux[kont].nombre
 													,alumnos_aux[kont].apellido_1
 													,alumnos_aux[kont].apellido_2);
@@ -330,56 +329,142 @@ void cargar_datos()
 {
 	char msg[INPUT_BUFFER_SIZE];
 	int kont=0;
+	int end_msg=0;
+	int datos_alumnos=0;
+	int datos_cursos=0;
+	int datos_asignaturas=0;
+	int datos_notas=0;
+
 	FILE *fp;
 
 	fp=fopen("fichero_alumnos.fch","r");
 
-	for(kont=0;kont<4;kont++)
-	{
-		alumnos[kont].nombre=malloc(20);
-		alumnos[kont].apellido_1=malloc(20);
-		alumnos[kont].apellido_2=malloc(20);
-		alumnos[kont].correo=malloc(40);
-
-		fgets(msg,INPUT_BUFFER_SIZE,fp);
-		sscanf(msg,"%i %s %s %s %s",&alumnos[kont].id,alumnos[kont].nombre,alumnos[kont].apellido_1,alumnos[kont].apellido_2,alumnos[kont].correo);
-	}
-
-	num_alumnos=kont;
-
-	fgets(msg,INPUT_BUFFER_SIZE,fp);
-
-	for(kont=0;kont<2;kont++)
-	{
-		cursos[kont].nombre=malloc(20);
-
-		fgets(msg,INPUT_BUFFER_SIZE,fp);
-		sscanf(msg,"%i %s",&cursos[kont].id,cursos[kont].nombre);
-	}
-
-	num_cursos=kont;
-
-	fgets(msg,INPUT_BUFFER_SIZE,fp);
-
-	for(kont=0;kont<10;kont++)
-	{
-		asignaturas[kont].nombre=malloc(20);
-
-		fgets(msg,INPUT_BUFFER_SIZE,fp);
-		sscanf(msg,"%i %i %s",&asignaturas[kont].id,&asignaturas[kont].curso_id,asignaturas[kont].nombre);
-	}
-
-	num_asignaturas=kont;
-
-	fgets(msg,INPUT_BUFFER_SIZE,fp);
-
-	for(kont=0;kont<40;kont++)
+	while((!datos_alumnos)||(!datos_cursos)||(!datos_asignaturas)||(!datos_notas))
 	{
 		fgets(msg,INPUT_BUFFER_SIZE,fp);
-		sscanf(msg,"%i %i %i",&notas[kont].alumno_id,&notas[kont].asignatura_id,&notas[kont].nota);
+
+		if((!datos_alumnos)&&(strcmp(msg,"Alumnos\n")==0))
+		{
+			kont=0;
+			end_msg=0;
+
+			do
+			{
+				alumnos[kont].nombre=malloc(20);
+				alumnos[kont].apellido_1=malloc(20);
+				alumnos[kont].apellido_2=malloc(20);
+				alumnos[kont].correo=malloc(40);
+
+				fgets(msg,INPUT_BUFFER_SIZE,fp);
+
+				if(strcmp(msg,"\n")==0)
+				{
+					end_msg=1;
+				}
+
+				if(!end_msg)
+				{
+					sscanf(msg,"%i %s %s %s %s",&alumnos[kont].id,alumnos[kont].nombre,alumnos[kont].apellido_1,alumnos[kont].apellido_2,alumnos[kont].correo);
+					kont++;
+				}
+
+			}while(!end_msg);
+
+			num_alumnos=kont;
+			datos_alumnos=1;
+		}
+		else
+		{
+			if((!datos_cursos)&&(strcmp(msg,"Cursos\n")==0))
+			{
+				kont=0;
+				end_msg=0;
+
+				do
+				{
+					cursos[kont].nombre=malloc(20);
+
+					fgets(msg,INPUT_BUFFER_SIZE,fp);
+
+					if(strcmp(msg,"\n")==0)
+					{
+						end_msg=1;
+					}
+
+					if(!end_msg)
+					{
+						sscanf(msg,"%i %s",&cursos[kont].id,cursos[kont].nombre);
+						kont++;
+					}
+
+				}while(!end_msg);
+
+				num_cursos=kont;
+				datos_cursos=1;
+			}
+			else
+			{
+				if((!datos_asignaturas)&&(strcmp(msg,"Asignaturas\n")==0))
+				{
+					kont=0;
+					end_msg=0;
+
+					do
+					{
+						asignaturas[kont].nombre=malloc(20);
+
+						fgets(msg,INPUT_BUFFER_SIZE,fp);
+
+						if(strcmp(msg,"\n")==0)
+						{
+							end_msg=1;
+						}
+
+						if(!end_msg)
+						{
+							sscanf(msg,"%i %i %s",&asignaturas[kont].id,&asignaturas[kont].curso_id,asignaturas[kont].nombre);
+							kont++;
+						}
+
+					}while(!end_msg);
+
+					num_asignaturas=kont;
+					datos_asignaturas=1;
+				}
+				else
+				{
+					if((!datos_notas)&&(strcmp(msg,"Notas\n")==0))
+					{
+						kont=0;
+						end_msg=0;
+
+						do
+						{
+							fgets(msg,INPUT_BUFFER_SIZE,fp);
+
+							if(strcmp(msg,"\n")==0)
+							{
+								end_msg=1;
+							}
+
+							if(!end_msg)
+							{
+								sscanf(msg,"%i %i %i",&notas[kont].alumno_id,&notas[kont].asignatura_id,&notas[kont].nota);
+								kont++;
+							}
+
+						}while(!end_msg);
+
+						num_notas=kont;
+						datos_notas=1;
+					}
+				}
+			}
+		}
 	}
 
-	num_notas=kont;
+
+
 
 	fclose(fp);
 }
